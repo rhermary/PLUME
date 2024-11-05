@@ -1,0 +1,10 @@
+data/
+__pycache__
+log/
+.vscode
+lightning_logs/
+mlruns/
+.mypy_cache
+untracked_scripts/
+.ipynb_checkpoints/
+plots*

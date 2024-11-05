@@ -1,0 +1,108 @@
+[project]
+name = "PLUME"
+version = "0.0.1"
+authors = [
+  { name="Hermary Romain", email="romain.hermary@uni.lu" },
+]
+description = "Research on anomaly detection"
+readme = "README.md"
+requires-python = "==3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.pylint.master]
+init-hook = 'import os, sys; sys.path.append("./src"); sys.path.append(".")'
+ignore = [
+  "__pycache__",
+  "env",
+]
+no-docstring-rgx = "__.*__"
+load-plugins = [
+  "pylint.extensions.docparams"
+]
+
+[tool.pylint.basic]
+accept-no-param-doc = "no"
+accept-no-raise-doc = "no"
+accept-no-return-doc = "no"
+accept-no-yields-doc = "no"
+
+[tool.pylint.messages_control]
+disable = [
+  # Consider re-enabling those warnings when development/debugging step is
+  # close to the end.
+  "anomalous-backslash-in-string",
+  "too-many-ancestors",
+  "too-many-instance-attributes",
+  "too-few-public-methods",
+  "W0511",  # Remaining `FIXME` and `TODO`
+  "R0801",  # Duplicate code
+  "W0613",  # Unused argument
+
+  # Consider re-enabling those warnings not to miss the chance of making the
+  # code even more understandable.
+  "W9011",  # Missing return documentation
+  "W9015",  # Missing param documentation
+  # "C0114",  # Missing module documentation
+  # "C0116",  # Missing function docstring
+  # "W9013",  # Missing yield documentation
+  # "W9006",  # Missing raises documentation
+  # "C0115",  # Missing class docstring
+]
+
+[tool.pylint.typecheck]
+generated-members = "numpy.*, torch.*"
+
+[tool.black]
+line-length = 80
+
+[tool.mypy]
+disallow_untyped_defs = true
+exclude = [
+  "__pycache__",
+  "env",
+  "tests",
+]
+mypy_path = "./src/"
+namespace_packages = true
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = [
+  "tensorboard.compat.proto.*",
+  "sklearn.metrics",
+  "torchvision.*",
+  "lightning_fabric.utilities.types",
+  "mlflow",
+  "mlflow.entities",
+  "matplotlib.*",
+  "mpl_toolkits.*",
+  "pandas",
+]
+ignore_missing_imports = true
+ignore_errors = true
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+pythonpath = [
+  "src",
+]
+filterwarnings = [
+]
+
+[tool.coverage.run]
+source = [
+  "src",
+]
+omit = [
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover"
+]
